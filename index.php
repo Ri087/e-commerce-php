@@ -1,17 +1,39 @@
 <?php
 require __DIR__ . "/src/inc/bootstrap.php";
- 
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode( '/', $uri );
+$uri = explode('/', $uri);
 // $uri = ["", "index.php", "user", "list"]
 // http://localhost/e-commerce-php-les-bests-benjou-et-jeremoux/index.php/user/list
 
-if ((isset($uri[FIRST_PARAM]) && $uri[FIRST_PARAM] != 'user') || !isset($uri[SECOND_PARAM])) {
+$firstParam = $uri[3];
+$secondParam = ucfirst($uri[4]);
+
+if (!isset($firstParam) || strlen($firstParam) == 0 || !isset($secondParam) || strlen($secondParam) == 0) {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
- 
-$objFeedController = new UserController();
-$strMethodName = $uri[4] . 'Action';
-$objFeedController->{$strMethodName}();
+
+$objFeedController = null;
+
+switch ($firstParam) {
+    case "cart":
+        $objFeedController = new CartController();
+        break;
+    case "invoices":
+        $objFeedController = new InvoicesController();
+        break;
+    case "product":
+        $objFeedController = new ProductController();
+        break;
+    case "user":
+        $objFeedController = new UserController();
+        break;
+    default:
+        header("HTTP/1.1 404 Not Found");
+        exit();
+}
+
+$strMethodName = $firstParam . $secondParam . "Action";
+// $objFeedController->{$strMethodName}();
 ?>
