@@ -9,7 +9,7 @@ class BaseController
     {
         $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
     }
- 
+
     /**
      * Get URI elements.
      * 
@@ -18,11 +18,11 @@ class BaseController
     protected function getUriSegments()
     {
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $uri = explode( '/', $uri );
- 
+        $uri = explode('/', $uri);
+
         return $uri;
     }
- 
+
     /**
      * Get querystring params.
      * 
@@ -32,24 +32,46 @@ class BaseController
     {
         return parse_str($_SERVER['QUERY_STRING'], $query);
     }
- 
+
     /**
      * Send API output.
      *
      * @param mixed  $data
      * @param string $httpHeader
      */
-    protected function sendOutput($data, $httpHeaders=array())
+    protected function sendOutput($data, $httpHeaders = array())
     {
         header_remove('Set-Cookie');
- 
+
         if (is_array($httpHeaders) && count($httpHeaders)) {
             foreach ($httpHeaders as $httpHeader) {
                 header($httpHeader);
             }
         }
- 
+
         echo $data;
         exit;
+    }
+
+    /**
+     * Change output if error
+     * 
+     * @param string $strErrorDesc
+     * @param string $strErrorHeader
+     * @param string $responseData
+     */
+    protected function ifError($strErrorDesc, $strErrorHeader, $responseData)
+    {
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                $responseData,
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        } else {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
     }
 }
