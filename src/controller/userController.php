@@ -49,6 +49,16 @@ class UserController extends BaseController
         }
 
         // send output
-        $this->ifError($strErrorDesc, $strErrorHeader, $responseData);
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                $responseData,
+                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
+            );
+        } else {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
     }
 }

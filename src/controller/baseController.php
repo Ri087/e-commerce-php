@@ -52,26 +52,4 @@ class BaseController
         echo $data;
         exit;
     }
-
-    /**
-     * Change output if error
-     * 
-     * @param string $strErrorDesc
-     * @param string $strErrorHeader
-     * @param string $responseData
-     */
-    protected function ifError($strErrorDesc, $strErrorHeader, $responseData)
-    {
-        if (!$strErrorDesc) {
-            $this->sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
-            );
-        } else {
-            $this->sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
-        }
-    }
 }

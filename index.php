@@ -35,5 +35,5 @@ switch ($firstParam) {
 }
 
 $strMethodName = $secondParam . "Action";
-// $objFeedController->{$strMethodName}();
+$objFeedController->{$strMethodName}();
 ?>
