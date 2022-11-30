@@ -1,3 +1,2 @@
-e-commerce.db
 /vendor/
-/src/inc/config.php
+/src/inc/Config.php

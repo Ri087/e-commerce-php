@@ -2,7 +2,7 @@
     "name": "just-go/e-commerce",
     "autoload": {
         "psr-4": {
-            "JustGo\\ECommerce\\": "src/"
+            "JustGo\\": "src/"
         }
     },
     "authors": [
