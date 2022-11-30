@@ -7,16 +7,13 @@ $uri = explode('/', $uri);
 // http://localhost/e-commerce-php-les-bests-benjou-et-jeremoux/index.php/user/list
 
 $firstParam = $uri[3];
-$secondParam = $uri[4];
-
-if (!isset($firstParam) || strlen($firstParam) == 0 || !isset($secondParam) || strlen($secondParam) == 0) {
-    header("HTTP/1.1 404 Not Found");
-    exit();
-}
 
 $objFeedController = null;
 
 switch ($firstParam) {
+    case "views":
+        require __DIR__ . '/src/views/index.html.twig';
+        break;
     case "cart":
         $objFeedController = new CartController();
         break;
@@ -34,6 +31,8 @@ switch ($firstParam) {
         exit();
 }
 
-$strMethodName = $secondParam . "Action";
-$objFeedController->{$strMethodName}();
+// $secondParam = $uri[4];
+
+// $strMethodName = $secondParam . "Action";
+// $objFeedController->{$strMethodName}();
 ?>
