@@ -1,6 +1,7 @@
 <?php
 require __DIR__ . "/src/inc/bootstrap.php";
 
+$request = $_SERVER['REQUEST_URI'];
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 // $uri = ["", "index.php", "user", "list"]
@@ -14,6 +15,7 @@ if (!isset($firstParam) || strlen($firstParam) == 0 || !isset($secondParam) || s
     exit();
 }
 
+print_r($request);
 $objFeedController = null;
 
 switch ($firstParam) {
