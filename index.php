@@ -7,7 +7,7 @@ $uri = explode('/', $uri);
 // http://localhost/e-commerce-php-les-bests-benjou-et-jeremoux/index.php/user/list
 
 $firstParam = $uri[3];
-$secondParam = ucfirst($uri[4]);
+$secondParam = $uri[4];
 
 if (!isset($firstParam) || strlen($firstParam) == 0 || !isset($secondParam) || strlen($secondParam) == 0) {
     header("HTTP/1.1 404 Not Found");
@@ -34,6 +34,6 @@ switch ($firstParam) {
         exit();
 }
 
-$strMethodName = $firstParam . $secondParam . "Action";
+$strMethodName = $secondParam . "Action";
 // $objFeedController->{$strMethodName}();
 ?>
