@@ -1,6 +1,6 @@
 <?php
 
-    namespace Crackito\Router;
+    namespace JustGo\Router;
 
     use Crackito\Router\RouterException;
     class Router
