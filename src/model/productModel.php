@@ -1,4 +1,7 @@
 <?php
+
+namespace JustGo\Model;
+
 class ProductModel extends Database
 {
     public function listProducts()

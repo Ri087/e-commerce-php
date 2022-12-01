@@ -1,5 +1,10 @@
 <?php
 
+namespace JustGo\Model;
+
+use mysqli;
+use Exception;
+
 class Database
 {
     protected $connection = null;

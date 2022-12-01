@@ -1,4 +1,7 @@
 <?php
+
+namespace JustGo\Model;
+
 class UserModel extends Database
 {
     public function createUser()

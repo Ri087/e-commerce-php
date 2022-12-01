@@ -1,30 +1,36 @@
 <?php
 
+namespace JustGo\Controller;
+
 class UserController extends BaseController
 {
     /**
      * "/user/create/[id]" Endpoint - Create our profil
      */
     public function createAction()
-    {}
+    {
+    }
 
     /**
      * "/user/read/[id]" Endpoint - Get our information (/!\ Admin - Get user information)
      */
     public function readAction()
-    {}
+    {
+    }
 
     /**
      * "/user/update/[id]" Endpoint - Update our information (/!\ Admin - Update user information)
      */
     public function updateAction()
-    {}
+    {
+    }
 
     /**
      * "/user/delete/[id]" Endpoint - Delete our profil (/!\ Admin - Delete a profil)
      */
     public function deleteAction()
-    {}
+    {
+    }
 
     /**
      * "/user/list" Endpoint - Get list of users

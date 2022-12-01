@@ -1,5 +1,7 @@
 <?php
 
+namespace JustGo\Controller;
+
 class BaseController
 {
     /**
