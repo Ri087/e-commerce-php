@@ -1,8 +1,7 @@
 <?php
 
-namespace JustGo\Model;
-
-class UserModel extends Database
+namespace JustGo\Model\Dao;
+class UserModel extends Dao
 {
     public function createUser()
     {

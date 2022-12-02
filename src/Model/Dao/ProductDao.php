@@ -1,8 +1,8 @@
 <?php
 
-namespace JustGo\Model;
+namespace JustGo\Model\Dao;
 
-class ProductModel extends Database
+class ProductModel extends Dao
 {
     public function listProducts()
     {

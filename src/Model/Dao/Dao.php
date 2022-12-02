@@ -1,11 +1,11 @@
 <?php
 
-namespace JustGo\Model;
+namespace JustGo\Model\Dao;
 
 use mysqli;
 use Exception;
 
-class Database
+class Dao
 {
     protected $connection = null;
 
