@@ -1,19 +1,27 @@
 <?php
 
 namespace JustGo\Model\Dao;
+
 class UserModel extends Dao
 {
-    public function createUser()
+    public function createUser($fakeName, $firstName, $lastName, $email, $phoneNumber, $birthDate)
     {
+        return $this->select("INSERT INTO t_user (User_FakeName, User_FirstName, User_LastName, User_Email, User_PhoneNumber, User_BirthDate)
+        VALUES ('$fakeName','$firstName',$lastName,'$email','$phoneNumber','$birthDate');");
 
     }
-    public function getUsers()
+    public function getUsers($id)
     {
-        return $this->select("SELECT * FROM T_User;");
+        if ($id == null) {
+
+            return $this->select("SELECT * FROM T_User;");
+        }
+        return $this->select("SELECT * FROM T_User WHERE User_ID = $id; ");
     }
 
-    public function deleteUser()
+    public function deleteUser($id)
     {
+        return $this->select("DELETE FROM T_User WHERE User_ID = $id;");
 
     }
 
