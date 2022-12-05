@@ -2,7 +2,7 @@
 
 namespace JustGo\Model\Dao;
 
-class UserModel extends Dao
+class UserDao extends Dao
 {
     public function createUser($fakeName, $firstName, $lastName, $email, $phoneNumber, $birthDate)
     {
@@ -10,7 +10,8 @@ class UserModel extends Dao
         VALUES ('$fakeName','$firstName',$lastName,'$email','$phoneNumber','$birthDate');");
 
     }
-    public function getUsers($id=null)
+
+    public function getUsers($id = null)
     {
         if ($id == null) {
 

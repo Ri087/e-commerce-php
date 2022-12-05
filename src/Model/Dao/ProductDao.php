@@ -2,7 +2,7 @@
 
 namespace JustGo\Model\Dao;
 
-class ProductModel extends Dao
+class ProductDao extends Dao
 {
     public function listProducts($name)
     {
