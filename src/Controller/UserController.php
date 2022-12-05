@@ -2,6 +2,9 @@
 
 namespace JustGo\Controller;
 
+use Error;
+use JustGo\Model\Dao\UserDao;
+
 class UserController extends BaseController
 {
     /**
@@ -42,7 +45,7 @@ class UserController extends BaseController
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $userModel = new UserModel();
+                $userModel = new UserDao();
                 $arrUsers = $userModel->getUsers();
                 $responseData = json_encode($arrUsers);
             } catch (Error $e) {

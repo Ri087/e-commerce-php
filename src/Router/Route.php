@@ -1,6 +1,7 @@
 <?php
 
 namespace JustGo\Router;
+
 class Route
 {
 
