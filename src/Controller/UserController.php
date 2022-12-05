@@ -12,6 +12,7 @@ class UserController extends BaseController
      */
     public function createAction()
     {
+        echo "Hello";
     }
 
     /**

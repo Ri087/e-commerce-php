@@ -1,11 +1,14 @@
 <?php
+namespace JustGo\Controller;
 
-class ViewController
+use JustGo\Controller\BaseController;
+
+class ViewController extends BaseController
 {
 
     public function home()
     {
-        return $this->render('user/notifications.html.twig', []);
+        return $this->render("/src/Views/baseTemplate.html.twig");
     }
 
 }
