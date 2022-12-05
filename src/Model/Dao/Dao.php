@@ -2,6 +2,8 @@
 
 namespace JustGo\Model\Dao;
 
+require_once(__DIR__ . "/../../inc/config.php");
+
 use mysqli;
 use Exception;
 

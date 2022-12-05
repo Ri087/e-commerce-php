@@ -11,11 +11,19 @@ class UserDao extends Dao
         "UserPhoto" => "T_UserPhoto",
         "UserPayements" => "T_UserPayement"
     ];
-    public function createUser($fakeName, $firstName, $lastName, $email, $phoneNumber, $birthDate)
+    public function createUser($fakeName, $firstName, $lastName, $email, $phoneNumber, $birthDate, $salt, $password)
     {
-        // return "Hello";
-        return $this->select("INSERT INTO t_user (User_FakeName, User_FirstName, User_LastName, User_Email, User_PhoneNumber, User_BirthDate)
-        VALUES ('$fakeName','$firstName',$lastName,'$email','$phoneNumber','$birthDate');");
+        $sqlStmtUserInfo = "INSERT INTO {$this->everyUserTable['UserInfo']} (User_FakeName, User_FirstName, User_LastName, User_Email, User_PhoneNumber, User_BirthDate) VALUES ('$fakeName', '$firstName', '$lastName', '$email' ,'$phoneNumber' ,'$birthDate');";
+        if ($this->connection->query($sqlStmtUserInfo) === TRUE) {
+            $id = $this->connection->insert_id;
+            $sqlStmtUserPassword = "INSERT INTO {$this->everyUserTable['UserPassword']} VALUES ($id, '$salt', '$password');";
+            if ($this->connection->query($sqlStmtUserPassword === TRUE)) {
+                return true;
+            }
+            $sqlStmtUserInfoDelete = "DELETE FROM {$this->everyUserTable['UserInfo']} WHERE User_ID = $id";
+            $this->connection->query($sqlStmtUserInfoDelete);
+        }
+        return false;
     }
 
     public function getUsers($id = null)
