@@ -10,7 +10,7 @@ class UserModel extends Dao
         VALUES ('$fakeName','$firstName',$lastName,'$email','$phoneNumber','$birthDate');");
 
     }
-    public function getUsers($id)
+    public function getUsers($id=null)
     {
         if ($id == null) {
 
