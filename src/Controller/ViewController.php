@@ -7,13 +7,17 @@ use Twig\Loader\FilesystemLoader;
 
 class ViewController extends BaseController
 {
-
-
-    public function display()
+    private $loader;
+    private $twig;
+    function __construct()
     {
-        $loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
-        $twig = new Environment($loader);
-        echo $twig->render("base" . '.html.twig', );
+        $this->loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
+        $this->twig = new Environment($this->loader);
+    }
+
+    public function display($page = null, $data = [])
+    {
+        echo $this->twig->render("home" . '.html.twig', $data);
     }
 
 }
