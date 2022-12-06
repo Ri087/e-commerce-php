@@ -24,7 +24,7 @@ class UserController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 // RECUPERER INFORMATION FROM FORMULAIRE
-                if (!($this->userDB->createUser("", "", "", "", "", "2022-11-22", "", ""))) {
+                if (!$this->userDB->createUser("", "", "", "", "", "", "", "")) {
                     $strErrorDesc = 'Ressource might already exist';
                     $strErrorHeader = 'HTTP/1.1 409 Conflict';
                 }

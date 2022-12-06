@@ -15,12 +15,12 @@ class Router
         $this->url = $url;
     }
 
-    public function get($path, $callable, $name = null)
+    public function get($path, $callable, $name = null , $params = null)
     {
         return $this->add($path, $callable, $name, 'GET');
     }
 
-    public function post($path, $callable, $name = null)
+    public function post($path, $callable, $name = null, $params = null)
     {
         return $this->add($path, $callable, $name, 'POST');
     }
