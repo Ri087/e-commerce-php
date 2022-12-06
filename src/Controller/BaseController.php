@@ -50,8 +50,5 @@ class BaseController
                 header($httpHeader);
             }
         }
-
-        echo $data;
-        exit;
     }
 }

@@ -28,11 +28,12 @@ class UserDao extends Dao
 
     public function getUsers($id = null)
     {
+        $data = null;
         if ($id == null) {
-
-            return $this->select("SELECT * FROM T_User;");
+            $data = $this->connection->query("SELECT * FROM {$this->everyUserTable['UserPassword']};");
         }
-        return $this->select("SELECT * FROM T_User WHERE User_ID = $id; ");
+        $data = $this->connection->query("SELECT * FROM {$this->everyUserTable['UserPassword']} WHERE User_ID = $id;");
+        return "";
     }
 
     public function deleteUser($id)

@@ -24,7 +24,7 @@ class UserController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 // RECUPERER INFORMATION FROM FORMULAIRE
-                if (!($this->userDB->createUser("Aze", "aze", "aze", "azazeazeeaze", "aze", "2022-11-22", "aze", "azeaze"))) {
+                if (!($this->userDB->createUser("", "", "", "", "", "2022-11-22", "", ""))) {
                     $strErrorDesc = 'Ressource might already exist';
                     $strErrorHeader = 'HTTP/1.1 409 Conflict';
                 }
@@ -41,7 +41,6 @@ class UserController extends BaseController
         // send output
         if (!$strErrorDesc) {
             $this->sendOutput(
-                "A CHANGER",
                 array('Content-Type: application/json', 'HTTP/1.1 201 OK')
             );
         } else {
@@ -57,6 +56,36 @@ class UserController extends BaseController
      */
     public function readAction()
     {
+        $strErrorDesc = '';
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'GET') {
+            try {
+                $this->userDB->getUsers(1);
+                // if (!$data->num_rows) {
+                //     $strErrorDesc = 'User not found';
+                //     $strErrorHeader = 'HTTP/1.1 404 Not Found';
+                // }
+                // var_dump($data);
+            } catch (Error $e) {
+                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+
+        } else {
+            $strErrorDesc = 'Method not supported';
+            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        // send output
+        if (!$strErrorDesc) {
+            $this->sendOutput(
+                array('Content-Type: application/json', 'HTTP/1.1 201 OK')
+            );
+        } else {
+            $this->sendOutput(
+                json_encode(array('error' => $strErrorDesc)),
+                array('Content-Type: application/json', $strErrorHeader)
+            );
+        }
     }
 
     /**
