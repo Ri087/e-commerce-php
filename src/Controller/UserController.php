@@ -54,18 +54,18 @@ class UserController extends BaseController
     /**
      * Get our information (/!\ Admin - Get user information)
      */
-    public function readAction()
+    public function readAction($id = null)
     {
         $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $this->userDB->getUsers(1);
+                $data = $this->userDB->getUsers($id);
                 // if (!$data->num_rows) {
                 //     $strErrorDesc = 'User not found';
                 //     $strErrorHeader = 'HTTP/1.1 404 Not Found';
                 // }
-                // var_dump($data);
+                var_dump($data);
             } catch (Error $e) {
                 $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';

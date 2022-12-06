@@ -10,17 +10,17 @@ class Router
     private $routes = [];
     private $namedRoutes = [];
 
-    public function __construct($url)
+    public function __construct()
     {
-        $this->url = $url;
+        $this->url = $_SERVER['REDIRECT_URL'];
     }
 
-    public function get($path, $callable, $name = null , $params = null)
+    public function get($path, $callable, $name = null)
     {
         return $this->add($path, $callable, $name, 'GET');
     }
 
-    public function post($path, $callable, $name = null, $params = null)
+    public function post($path, $callable, $name = null)
     {
         return $this->add($path, $callable, $name, 'POST');
     }

@@ -31,9 +31,10 @@ class UserDao extends Dao
         $data = null;
         if ($id == null) {
             $data = $this->connection->query("SELECT * FROM {$this->everyUserTable['UserPassword']};");
+            return $data;
         }
         $data = $this->connection->query("SELECT * FROM {$this->everyUserTable['UserPassword']} WHERE User_ID = $id;");
-        return "";
+        return $data;
     }
 
     public function deleteUser($id)

@@ -8,7 +8,6 @@ class Route
     private $path;
     private $callable;
     private $matches = [];
-    private $params = [];
 
     public function __construct($path, $callable)
     {
@@ -35,9 +34,6 @@ class Route
 
     private function paramMatch($match)
     {
-        if (isset($this->params[$match[1]])) {
-            return '(' . $this->params[$match[1]] . ')';
-        }
         return '([^/]+)';
     }
 
