@@ -7,6 +7,6 @@ $base_url = "/e-commerce-php-les-bests-benjou-et-jeremoux";
 
 $router = new Router($_SERVER['REQUEST_URI']);
 
-$router->post($base_url . '/', "User#create");
+$router->get($base_url . '/', "User#createAction");
 
 $router->run();

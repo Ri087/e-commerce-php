@@ -48,7 +48,7 @@ class Route
             // Posts#show qui fera appel à la class PostsController et à la méthode show().
             $controller = "JustGo\\Controller\\" . $params[0] . "Controller";
             $controller = new $controller();
-            return call_user_func_array([$controller, $params[1] . "Action"], $this->matches);
+            return call_user_func_array([$controller, $params[1]], $this->matches);
         } else {
             return call_user_func_array($this->callable, $this->matches);
         }

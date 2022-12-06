@@ -36,7 +36,7 @@ class BaseController
     }
 
     /**
-     * Send API output.
+     * Send API output. 
      *
      * @param mixed  $data
      * @param string $httpHeader

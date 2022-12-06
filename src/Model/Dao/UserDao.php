@@ -17,7 +17,7 @@ class UserDao extends Dao
         if ($this->connection->query($sqlStmtUserInfo) === TRUE) {
             $id = $this->connection->insert_id;
             $sqlStmtUserPassword = "INSERT INTO {$this->everyUserTable['UserPassword']} VALUES ($id, '$salt', '$password');";
-            if ($this->connection->query($sqlStmtUserPassword === TRUE)) {
+            if ($this->connection->query($sqlStmtUserPassword) === TRUE) {
                 return true;
             }
             $sqlStmtUserInfoDelete = "DELETE FROM {$this->everyUserTable['UserInfo']} WHERE User_ID = $id";
