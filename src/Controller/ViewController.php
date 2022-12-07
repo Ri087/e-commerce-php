@@ -35,12 +35,25 @@ class ViewController extends BaseController
             $this->display("base");
         }
     }
+    public function home()
+    {
+
+        $this->display("base");
+    }
     public function profil()
     {
         $data = $this->user->readAction(123123);
         $this->errorCheck($data);
     }
 
+    public function login()
+    {
+        if(isset($_SESSION['uid'])) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
+            exit(0);
+        }
+        $this->display("login");
+    }
 }
 
 ?>
