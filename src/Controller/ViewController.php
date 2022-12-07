@@ -15,9 +15,9 @@ class ViewController extends BaseController
         $this->twig = new Environment($this->loader);
     }
 
-    public function display($page = null, $data = [])
+    public function display($page, $data = [])
     {
-        echo $this->twig->render("home" . '.html.twig', $data);
+        echo $this->twig->render($page . '.html.twig', $data);
     }
 
 }

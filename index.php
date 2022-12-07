@@ -13,5 +13,6 @@ $router->get($base_url . "/", function () {
 $router->get($base_url . '/test', "");
 $router->get($base_url . '/user/create', "User#createAction");
 $router->get($base_url . '/user/read', "User#readAction");
+$router->get($base_url . '/user/read/:id', "User#readAction");
 
 $router->run();
