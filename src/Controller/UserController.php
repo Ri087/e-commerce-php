@@ -21,26 +21,51 @@ class UserController extends BaseController
     public function createAction()
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        if (strtoupper($requestMethod) == 'GET') {
-            try {
-                // RECUPERER INFORMATION FROM FORMULAIRE
-                if (!$this->userDB->createUser("", "", "", "", "", "", "", "")) {
-                    $this->strErrorDesc = 'Ressource might already exist';
-                    $this->strErrorHeader = 'HTTP/1.1 409 Conflict';
+        $dataUser = $_POST;
+        if (strtoupper($requestMethod) == 'POST') {
+            if ($this->checkRegister($dataUser)) {
+                try {
+                    $uid = $this->userDB->createUser($dataUser["pseudo"], $dataUser["firstname"], $dataUser["lastname"], $dataUser["mail"], $dataUser["number"], $dataUser["birthdate"], $dataUser["password"]);
+                    if (!$uid) {
+                        $this->strErrorDesc = 'Ressource might already exist';
+                        $this->strErrorHeader = 'HTTP/1.1 409 Conflict';
+                    }
+                } catch (Error $e) {
+                    $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                    $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
                 }
-            } catch (Error $e) {
-                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            } else {
+                $this->strErrorDesc = 'Cannot be understood';
+                $this->strErrorHeader = 'HTTP/1.1 400 Bad Request';
             }
-
         } else {
             $this->strErrorDesc = 'Method not supported';
             $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-        return [
-            "strErrorDesc" => $this->strErrorDesc,
-            "strErrorHeader" => $this->strErrorHeader
-        ];
+        if ($this->strErrorHeader) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/login');
+
+        } else {
+            $_SESSION["uid"] = $uid;
+            $_SESSION["permission"] = 0;
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
+        }
+    }
+    private function checkRegister($dataUserRegister)
+    {
+        if (strlen($dataUserRegister['pseudo']) < 3 || strlen($dataUserRegister['pseudo']) > 32) {
+            return false;
+        }
+        if (strlen($dataUserRegister['firstname']) < 3 || strlen($dataUserRegister['lastname']) > 32) {
+            return false;
+        }
+        if (strlen($dataUserRegister['lastname']) < 3 || strlen($dataUserRegister['lastname']) > 64) {
+            return false;
+        }
+        if ($dataUserRegister['password'] != $dataUserRegister['confirmpassword']) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -84,5 +109,40 @@ class UserController extends BaseController
      */
     public function deleteAction()
     {
+    }
+    public function loginAction()
+    {
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        $dataUser = $_POST;
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                $data = $this->userDB->loginUser($dataUser["mail"], $dataUser["password"]);
+                if (!$data['User_ID']) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        if ($this->strErrorHeader) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/login');
+        } else {
+            $_SESSION["uid"] = $data['User_ID'];
+            $_SESSION["permission"] = $data['User_Permission'];
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
+        }
+    }
+
+    public function logoutAction()
+    {
+        $_SESSION["uid"] = null;
+        $_SESSION["permission"] = null;
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
     }
 }
