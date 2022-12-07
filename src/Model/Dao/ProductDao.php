@@ -2,27 +2,76 @@
 
 namespace JustGo\Model\Dao;
 
+use JustGo\Model\ObjectData\ProductObjectData;
+
+
 class ProductDao extends Dao
 {
-    public function listProducts($name)
+    public function readProductByCategorieName($name)
     {
-        return $this->select("SELECT * FROM `t_product` INNER JOIN t_typeofproducts ON t_product.TOP_ID = t_typeofproducts.TOP_ID WHERE t_typeofproducts.TOP_Name = $name; ");
-        
-    }
-    public function readProduct($id)
-    {
-        return $this->select("SELECT * FROM t_product WHERE TOP_ID = $id; ");
+        $productObjct = new ProductObjectData();
 
+        $sqlStmt = "SELECT * FROM t_typeofproducts 
+        INNER JOIN t_productsphoto  ON t_productsphoto.TOP_ID = t_typeofproducts.TOP_ID
+        INNER JOIN t_productscategory ON t_productscategory.TOP_ID = t_typeofproducts.TOP_ID
+        WHERE t_typeofproducts.TOP_Name = '$name'
+        LIMIt 1;";
+        $data = $this->connection->query($sqlStmt);
+        return $productObjct->dataProcessing($data);
     }
-    public function createProduct($type_of_product, $suplier)
+    public function readProductById($id)
     {
-        $this->select("INSERT INTO t_product (TOP_ID , Supp_ID)
-        VALUES ('$type_of_product','$suplier');");
+        $productObjct = new ProductObjectData();
+        $sqlStmt = "SELECT  * FROM t_typeofproducts 
+        INNER JOIN t_productsphoto ON t_productsphoto.TOP_ID = t_typeofproducts.TOP_ID
+        WHERE t_typeofproducts.TOP_ID =  $id;";
+        $data = $this->connection->query($sqlStmt);
+        return $productObjct->dataProcessing($data);
+    }
 
+    public function listTypeOfProduct()
+    {
+        $productObjct = new ProductObjectData();
+        $sqlStmt = "SELECT t_typeofproducts.TOP_ID, t_typeofproducts.TOP_Name , t_typeofproducts.TOP_Description, t_productsphoto.PP_Photo FROM `t_typeofproducts`
+        INNER JOIN t_productsphoto ON t_productsphoto.TOP_ID = t_typeofproducts.TOP_ID;";
+        $data = $this->connection->query($sqlStmt);
+        return $productObjct->dataProcessing($data);
+    }
+
+    public function createProduct($productName, $productDescription, $defautlPrice, $TVA, $productQuantity, $img)
+    {
+
+        $sqlStmtCreateProduct = "INSERT INTO t_typeofproducts (TOP_Name, TOP_Description, TOP_DefaultPrice ,TOP_TVA, TOP_Quantity )
+        VALUES ('$productName','$productDescription', $defautlPrice, $TVA, $productQuantity);";
+
+        if ($this->connection->query($sqlStmtCreateProduct) === TRUE) {
+            $id = $this->connection->insert_id;
+            $blob = addslashes(file_get_contents($img));
+            $sqlStmtAddProductImg = "INSERT INTO t_productsphoto (TOP_ID, PP_Photo) VALUE ($id, '{$blob}');";
+            if ($this->connection->query($sqlStmtAddProductImg) === TRUE) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+    //value de t_typeOfProduct = TOP_ID, TOP_Name, TOP_Description, TOP_DefaultPrice, TOP_TVA, TOP_Quantity
+    public function updateProduct($id, $column, $value)
+    {
+        echo $id, $column, $value;
+        if ($this->connection->query("UPDATE `t_typeofproducts` SET {$column} = '$value' WHERE TOP_ID = $id;") === TRUE){
+            return true;
+        }
+        return false;
     }
     public function deleteProduct($id)
     {
-        return $this->select("DELETE FROM t_product WHERE Prod_ID = $id;");
+        if ($this->connection->query("DELETE FROM t_typeofproducts WHERE TOP_ID = $id;") === TRUE){
+            if ($this->connection->query("DELETE FROM t_productsphoto WHERE TOP_ID = $id;") === TRUE){
+                return true;
+            }
+        }
+        return false; 
     }
 
 }

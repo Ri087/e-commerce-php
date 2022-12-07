@@ -1,6 +1,7 @@
 <?php
 
 namespace JustGo\Model\Dao;
+
 use JustGo\Model\ObjectData\UserObjectData;
 
 class UserDao extends Dao
@@ -30,9 +31,12 @@ class UserDao extends Dao
     public function getUsers($id = null)
     {
         $userObj = new UserObjectData();
-        $sqlStmt = "SELECT * FROM T_User WHERE User_ID = $id;";
+        $sqlStmt = "SELECT * FROM T_User 
+        INNER JOIN t_userphoto ON t_userphoto.User_ID = t_User.User_ID
+        WHERE t_user.User_ID = $id";
         if ($id == null) {
-            $sqlStmt = "SELECT * FROM T_User;";
+            $sqlStmt = "SELECT * FROM T_User 
+            INNER JOIN t_userphoto ON t_userphoto.User_ID = t_User.User_ID;";
         }
         $data = $this->connection->query($sqlStmt);
         return $userObj->dataProcessing($data);
