@@ -47,7 +47,7 @@ class ViewController extends BaseController
 
     public function productByCategorieName($name)
     {
-        $data = $this->product->readAction("readProductByCategorieName", $name);
+        $data = $this->product->readAction("listProductByCategorie", $name);
         var_dump($data);
         $this->display("home");
     }
@@ -68,6 +68,9 @@ class ViewController extends BaseController
         var_dump($data);
         $this->display("home");
     }
+
+
+
     public function login()
     {
         $this->display("login");
@@ -83,9 +86,9 @@ class ViewController extends BaseController
     {
         $this->adminDisplay("home");
     }
-    public function adminUsers($id = null)
+    public function adminUsers()
     {
-        $data = $this->user->readAction($id);
+        $data = $this->user->readAction();
         $this->adminDisplay("users", $data);
     }
     public function adminProducts()
