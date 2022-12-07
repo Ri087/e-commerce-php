@@ -14,8 +14,6 @@ class ViewController extends BaseController
     private $user;
     function __construct()
     {
-        $this->loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
-        $this->twig = new Environment($this->loader);
         $this->invoices = new InvoicesController();
         $this->product = new ProductController();
         $this->user = new UserController();
@@ -23,7 +21,9 @@ class ViewController extends BaseController
 
     public function display($page, $data = [])
     {
-        echo $this->twig->render($page . '.html.twig', $data);
+        $loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
+        $twig = new Environment($loader);
+        echo $twig->render($page . '.html.twig', $data);
     }
 
     public function errorCheck($data)
@@ -48,11 +48,35 @@ class ViewController extends BaseController
 
     public function login()
     {
-        if(isset($_SESSION['uid'])) {
+        if (isset($_SESSION['uid'])) {
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
             exit(0);
         }
         $this->display("login");
+    }
+    public function adminDisplay($page, $data = [])
+    {
+        $loader = new FilesystemLoader(__DIR__ . '/../Views/templates/admin');
+        $twig = new Environment($loader);
+        echo $twig->render($page . '.html.twig', $data);
+    }
+
+    public function admin()
+    {
+        $this->adminDisplay("home");
+    }
+    public function adminUsers()
+    {
+        $data = $this->user->readAction();
+        $this->adminDisplay("users", $data);
+    }
+    public function adminProducts()
+    {
+        $this->adminDisplay("products");
+    }
+    public function adminCommand()
+    {
+        $this->adminDisplay("command");
     }
 }
 

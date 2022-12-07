@@ -47,6 +47,7 @@ class UserController extends BaseController
 
         } else {
             $_SESSION["uid"] = $uid;
+            $_SESSION["permission"] = 0;
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
         }
     }
@@ -115,8 +116,8 @@ class UserController extends BaseController
         $dataUser = $_POST;
         if (strtoupper($requestMethod) == 'POST') {
             try {
-                $uid = $this->userDB->loginUser($dataUser["mail"], $dataUser["password"]);
-                if (!$uid) {
+                $data = $this->userDB->loginUser($dataUser["mail"], $dataUser["password"]);
+                if (!$data['User_ID']) {
                     $this->strErrorDesc = 'User not found';
                     $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
                 }
@@ -132,7 +133,8 @@ class UserController extends BaseController
         if ($this->strErrorHeader) {
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/login');
         } else {
-            $_SESSION["uid"] = $uid;
+            $_SESSION["uid"] = $data['User_ID'];
+            $_SESSION["permission"] = $data['User_Permission'];
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
         }
     }
@@ -140,6 +142,7 @@ class UserController extends BaseController
     public function logoutAction()
     {
         $_SESSION["uid"] = null;
+        $_SESSION["permission"] = null;
         header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
     }
 }

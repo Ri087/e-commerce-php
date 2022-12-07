@@ -1,0 +1,18 @@
+{% extends "baseTemplate.html.twig" %}
+{% block meta %}
+	<link href="/src/Views/style/admin.css" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block title %}
+	Users
+{% endblock %}
+{% block content %}
+	<section>
+	{{ data[1] }}
+		{% for user in data %}
+			{% for elem in user %}
+				{{ elem }} -
+			{% endfor %}
+			<br>
+		{% endfor %}
+	</section>
+{% endblock %}

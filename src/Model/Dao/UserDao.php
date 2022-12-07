@@ -36,15 +36,15 @@ class UserDao extends Dao
     }
     public function loginUser($mail, $password)
     {
-        $sqlStmtId = "SELECT User_ID FROM {$this->everyUserTable['UserInfo']} WHERE User_Email = '$mail'";
+        $sqlStmtId = "SELECT User_ID, User_Permission FROM {$this->everyUserTable['UserInfo']} WHERE User_Email = '$mail'";
         $data = $this->connection->query($sqlStmtId);
         $data = $this->userObj->dataProcessing($data);
         if (isset($data[0]["User_ID"])) {
-            $sqlStmtCheckPassword = "SELECT User_ID, US_Password FROM {$this->everyUserTable['UserPassword']} WHERE User_ID = '{$data[0]["User_ID"]}'";
-            $data = $this->connection->query($sqlStmtCheckPassword);
-            $data = $this->userObj->dataProcessing($data);
-            if (isset($data[0]["User_ID"]) && password_verify($password, $data[0]['US_Password'])) {
-                return $data[0]["User_ID"];
+            $sqlStmtCheckPassword = "SELECT US_Password FROM {$this->everyUserTable['UserPassword']} WHERE User_ID = '{$data[0]["User_ID"]}'";
+            $data2 = $this->connection->query($sqlStmtCheckPassword);
+            $data2 = $this->userObj->dataProcessing($data2);
+            if (isset($data[0]["User_ID"]) && password_verify($password, $data2[0]['US_Password'])) {
+                return $data[0];
             }
         }
         return null;

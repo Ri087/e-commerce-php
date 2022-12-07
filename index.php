@@ -2,6 +2,7 @@
 require_once __DIR__ . "/vendor/autoload.php";
 
 use JustGo\Router\Router;
+use JustGo\Router\RouterException;
 
 $base_url = "/e-commerce-php-les-bests-benjou-et-jeremoux";
 
@@ -12,12 +13,19 @@ $router->get($base_url . '/', "View#home");
 $router->get($base_url . '/profil', "View#profil");
 $router->get($base_url . '/login', "View#login");
 
+if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['permission'] == 1) {
+    $router->get($base_url . '/admin', "View#admin");
+    $router->get($base_url . '/admin/command', "View#adminCommand");
+    $router->get($base_url . '/admin/products', "View#adminProducts");
+    $router->get($base_url . '/admin/users', "View#adminUsers");
+}
+
 $router->post($base_url . '/user/create', "User#createAction");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 
-// $router->get($base_url . '/user/read', "User#readAction");
-// $router->get($base_url . '/user/read/:id', "User#readAction");
-// $router->get($base_url . '/user/update', "User#updateAction");
-
-$router->run();
+try {
+    $router->run();
+} catch (RouterException $e) {
+    echo "Afficher page 404";
+}
