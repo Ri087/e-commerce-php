@@ -26,11 +26,19 @@ class ViewController extends BaseController
         echo $twig->render($page . '.html.twig', $data);
     }
 
-    public function home()
+    public function profil()
     {
+        $data = $this->user->readAction(3);
+        var_dump($data);
         $this->display("base");
     }
-    public function profil($id)
+
+    public function home()
+    {
+
+        $this->display("base");
+    }
+    public function productById($id)
     {
         $data = $this->product->readAction("readProductById",$id);
         var_dump($data);
@@ -56,6 +64,8 @@ class ViewController extends BaseController
         var_dump($data);
         $this->display("home");
     }
+
+
 
     public function login()
     {
