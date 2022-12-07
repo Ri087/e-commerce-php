@@ -16,6 +16,10 @@ if (isset($_SESSION['uid'])) {
 } else {
     $router->get($base_url . '/login', "View#login");
 }
+$router->get($base_url . '/products', "View#productByTypeOfPRoduct");
+$router->get($base_url . '/product/:id', "View#productById");
+$router->get($base_url . '/category/:name', "View#productByCategorieName");
+
 
 if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['permission'] == 1) {
     $router->get($base_url . '/admin', "View#admin");
@@ -28,6 +32,9 @@ if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['perm
 $router->post($base_url . '/user/create', "User#createAction");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
+$router->post($base_url . '/product/create', "View#createProduct"); // formulaire post
+$router->post($base_url . '/product/update', "View#updateProduct"); // formulaire post
+$router->post($base_url . '/product/delete/:id', "View#deleteProduct"); // link + id = delete
 
 try {
     $router->run();

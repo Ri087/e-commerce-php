@@ -26,23 +26,39 @@ class ViewController extends BaseController
         echo $twig->render($page . '.html.twig', $data);
     }
 
-    public function errorCheck($data)
-    {
-        if ($data["strErrorHeader"]) {
-            var_dump($data);
-            // $this->display("error", $data);
-        } else {
-            $this->display("base");
-        }
-    }
     public function home()
     {
         $this->display("base");
     }
-    public function profil()
+    public function profil($id)
     {
-        $data = $this->user->readAction($_SESSION['uid']);
-        $this->errorCheck($data);
+        $data = $this->product->readAction("readProductById", $id);
+        var_dump($data);
+        $this->display("home");
+    }
+
+    public function productByCategorieName($name)
+    {
+        $data = $this->product->readAction("readProductByCategorieName", $name);
+        var_dump($data);
+        $this->display("home");
+    }
+    public function createProduct()
+    {
+        $data = $this->product->createAction();
+        $this->display("home");
+    }
+    public function updateProduct()
+    {
+        $data = $this->product->updateAction(12, "TOP_Description", "hello world !");
+        var_dump($data);
+        $this->display("home");
+    }
+    public function deleteProduct($id)
+    {
+        $data = $this->product->deleteAction($id);
+        var_dump($data);
+        $this->display("home");
     }
 
     public function login()

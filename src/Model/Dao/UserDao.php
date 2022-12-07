@@ -52,7 +52,7 @@ class UserDao extends Dao
 
     public function getUsers($id = null)
     {
-        $sqlStmt = "SELECT * FROM T_User WHERE User_ID = $id;";
+        $sqlStmt = "SELECT * FROM T_User WHERE t_user.User_ID = $id";
         if ($id == null) {
             $sqlStmt = "SELECT * FROM T_User;";
         }
