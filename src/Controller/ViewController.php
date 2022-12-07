@@ -68,9 +68,6 @@ class ViewController extends BaseController
         var_dump($data);
         $this->display("home");
     }
-
-
-
     public function login()
     {
         $this->display("login");
