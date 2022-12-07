@@ -76,9 +76,9 @@ class ViewController extends BaseController
     {
         $this->adminDisplay("home");
     }
-    public function adminUsers()
+    public function adminUsers($id = null)
     {
-        $data = $this->user->readAction();
+        $data = $this->user->readAction($id);
         $this->adminDisplay("users", $data);
     }
     public function adminProducts()
