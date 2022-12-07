@@ -40,26 +40,30 @@ class ViewController extends BaseController
     }
     public function productById($id)
     {
-        $data = $this->product->readAction("readProductById",$id);
+        $data = $this->product->readAction("readProductById", $id);
         var_dump($data);
         $this->display("home");
     }
-    
-    public function productByCategorieName($name){
+
+    public function productByCategorieName($name)
+    {
         $data = $this->product->readAction("readProductByCategorieName", $name);
         var_dump($data);
         $this->display("home");
     }
-    public function createProduct(){
+    public function createProduct()
+    {
         $data = $this->product->createAction();
         $this->display("home");
     }
-    public function updateProduct(){
-        $data = $this->product->updateAction(12,"TOP_Description", "hello world !");
+    public function updateProduct()
+    {
+        $data = $this->product->updateAction(12, "TOP_Description", "hello world !");
         var_dump($data);
         $this->display("home");
     }
-    public function deleteProduct($id){
+    public function deleteProduct($id)
+    {
         $data = $this->product->deleteAction($id);
         var_dump($data);
         $this->display("home");
@@ -69,10 +73,6 @@ class ViewController extends BaseController
 
     public function login()
     {
-        if (isset($_SESSION['uid'])) {
-            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
-            exit(0);
-        }
         $this->display("login");
     }
     public function adminDisplay($page, $data = [])

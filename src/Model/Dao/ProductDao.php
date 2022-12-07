@@ -7,6 +7,8 @@ use JustGo\Model\ObjectData\ProductObjectData;
 
 class ProductDao extends Dao
 {
+
+    // A REFAIRE
     public function readProductByCategorieName($name)
     {
         $productObjct = new ProductObjectData();

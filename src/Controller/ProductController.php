@@ -9,12 +9,11 @@ use JustGo\Model\Dao\ProductDao;
 class ProductController extends BaseController
 {
 
-    private $userDB = null;
-    private $userObject = null;
+    private $productDB = null;
 
     public function __construct()
     {
-        $this->userDB = new ProductDao();
+        $this->productDB = new ProductDao();
     }
 
     public function createAction()
@@ -23,7 +22,7 @@ class ProductController extends BaseController
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 // RECUPERER INFORMATION FROM FORMULAIRE
-                if (!$this->userDB->createProduct("macbook", "apple mac", 12600, 0.2, 900, "https://i.imgur.com/UYcHkKD.png")) {
+                if (!$this->productDB->createProduct("macbook", "apple mac", 12600, 0.2, 900, "https://i.imgur.com/UYcHkKD.png")) {
                     $this->strErrorDesc = 'Ressource not create !';
                     $this->strErrorHeader = 'HTTP/1.1 409 Conflict';
                 }
@@ -48,7 +47,7 @@ class ProductController extends BaseController
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $data = $this->userDB->{$function}($id);
+                $data = $this->productDB->{$function}($id);
                 if (!$data) {
                     $this->strErrorDesc = 'User not found';
                     $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
@@ -77,7 +76,7 @@ class ProductController extends BaseController
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $data = $this->userDB->updateProduct($id, $column, $content);
+                $data = $this->productDB->updateProduct($id, $column, $content);
                 if (!$data) {
                     $this->strErrorDesc = 'User not found';
                     $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
@@ -104,7 +103,7 @@ class ProductController extends BaseController
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $data = $this->userDB->deleteProduct($id);
+                $data = $this->productDB->deleteProduct($id);
                 if (!$data) {
                     $this->strErrorDesc = 'User not found';
                     $this->strErrorHeader = 'HTTP/1.1 404 Not Found';

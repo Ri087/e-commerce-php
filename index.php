@@ -10,27 +10,31 @@ session_start();
 $router = new Router();
 
 $router->get($base_url . '/', "View#home");
-$router->get($base_url . '/profil', "View#profil");
-$router->get($base_url . '/login', "View#login");
+if (isset($_SESSION['uid'])) {
+    $router->get($base_url . '/profil', "View#profil");
+    $router->get($base_url . '/profil/update', "View#profil");
+} else {
+    $router->get($base_url . '/login', "View#login");
+}
+$router->get($base_url . '/products', "View#productByTypeOfPRoduct");
+$router->get($base_url . '/product/:id', "View#productById");
+$router->get($base_url . '/category/:name', "View#productByCategorieName");
 
-$router->get($base_url . '/admin', "View#profil");
-$router->get($base_url . '/product_id/:id', "View#productById");
-$router->get($base_url . '/product_name/:name', "View#productByCategorieName");
-$router->get($base_url . '/product_list', "View#productByTypeOfPRoduct");
-$router->get($base_url . '/create_product', "View#createProduct");
-$router->get($base_url . '/update_product', "View#updateProduct"); //recuperer les données !!!
-$router->get($base_url . '/delete_product/:id', "View#deleteProduct");
 
 if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['permission'] == 1) {
     $router->get($base_url . '/admin', "View#admin");
     $router->get($base_url . '/admin/command', "View#adminCommand");
     $router->get($base_url . '/admin/products', "View#adminProducts");
     $router->get($base_url . '/admin/users', "View#adminUsers");
+    $router->get($base_url . '/admin/users/:id', "View#adminUsers");
 }
 
 $router->post($base_url . '/user/create', "User#createAction");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
+$router->post($base_url . '/product/create', "View#createProduct"); // formulaire post
+$router->post($base_url . '/product/update', "View#updateProduct"); // formulaire post
+$router->post($base_url . '/product/delete/:id', "View#deleteProduct"); // link + id = delete
 
 try {
     $router->run();
