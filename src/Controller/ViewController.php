@@ -9,15 +9,28 @@ class ViewController extends BaseController
 {
     private $loader;
     private $twig;
+    private $invoices;
+    private $product;
+    private $user;
     function __construct()
     {
         $this->loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
         $this->twig = new Environment($this->loader);
+        $this->invoices = new InvoicesController();
+        $this->product = new ProductController();
+        $this->user = new UserController();
     }
 
     public function display($page, $data = [])
     {
         echo $this->twig->render($page . '.html.twig', $data);
+    }
+
+    public function profil()
+    {
+        $data = $this->user->readAction(123);
+        var_dump($data);
+        $this->display("base");
     }
 
 }

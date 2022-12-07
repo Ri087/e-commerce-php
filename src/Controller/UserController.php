@@ -7,14 +7,12 @@ use JustGo\Model\Dao\UserDao;
 
 class UserController extends BaseController
 {
-    protected $view = null;
     private $userDB = null;
     private $userObject = null;
 
     public function __construct()
     {
         $this->userDB = new UserDao();
-        $this->view = new ViewController();
     }
 
     /**
@@ -85,12 +83,7 @@ class UserController extends BaseController
             );
             return;
         }
-        // ID = null means admin calling all users
-        if ($id) {
-            $this->view->display("base");
-        } else {
-            $this->view->display();
-        }
+        return $data;
     }
 
     /**
