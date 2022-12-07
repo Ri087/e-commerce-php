@@ -100,7 +100,7 @@ class UserController extends BaseController
     /**
      * Update our information (/!\ Admin - Update user information)
      */
-    public function updateAction()
+    public function updateAction($id)
     {
     }
 

@@ -37,21 +37,16 @@ class ViewController extends BaseController
     }
     public function home()
     {
-
         $this->display("base");
     }
     public function profil()
     {
-        $data = $this->user->readAction(123123);
+        $data = $this->user->readAction($_SESSION['uid']);
         $this->errorCheck($data);
     }
 
     public function login()
     {
-        if (isset($_SESSION['uid'])) {
-            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
-            exit(0);
-        }
         $this->display("login");
     }
     public function adminDisplay($page, $data = [])
