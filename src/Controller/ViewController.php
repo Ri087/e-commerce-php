@@ -26,11 +26,19 @@ class ViewController extends BaseController
         echo $this->twig->render($page . '.html.twig', $data);
     }
 
+    public function errorCheck($data)
+    {
+        if ($data["strErrorHeader"]) {
+            var_dump($data);
+            // $this->display("error", $data);
+        } else {
+            $this->display("base");
+        }
+    }
     public function profil()
     {
-        $data = $this->user->readAction(123);
-        var_dump($data);
-        $this->display("base");
+        $data = $this->user->readAction(123123);
+        $this->errorCheck($data);
     }
 
 }
