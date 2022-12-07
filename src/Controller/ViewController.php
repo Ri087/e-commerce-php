@@ -28,7 +28,7 @@ class ViewController extends BaseController
 
     public function errorCheck($data)
     {
-        if ($data["strErrorCode"]) {
+        if ($data["strErrorHeader"]) {
             var_dump($data);
             // $this->display("error", $data);
         } else {
