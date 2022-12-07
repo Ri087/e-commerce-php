@@ -4,6 +4,8 @@ namespace JustGo\Controller;
 
 class BaseController
 {
+    protected $strErrorDesc = null;
+    protected $strErrorHeader = null;
     /**
      * __call magic method.
      */

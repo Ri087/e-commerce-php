@@ -20,36 +20,27 @@ class UserController extends BaseController
      */
     public function createAction()
     {
-        $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 // RECUPERER INFORMATION FROM FORMULAIRE
                 if (!$this->userDB->createUser("", "", "", "", "", "", "", "")) {
-                    $strErrorDesc = 'Ressource might already exist';
-                    $strErrorHeader = 'HTTP/1.1 409 Conflict';
+                    $this->strErrorDesc = 'Ressource might already exist';
+                    $this->strErrorHeader = 'HTTP/1.1 409 Conflict';
                 }
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
 
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-
-        // send output
-        if (!$strErrorDesc) {
-            $this->sendOutput(
-                array('Content-Type: application/json', 'HTTP/1.1 201 OK')
-            );
-        } else {
-            $this->sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
-        }
+        return [
+            "strErrorDesc" => $this->strErrorDesc,
+            "strErrorHeader" => $this->strErrorHeader
+        ];
     }
 
     /**
@@ -57,33 +48,28 @@ class UserController extends BaseController
      */
     public function readAction($id = null)
     {
-        $strErrorDesc = '';
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'GET') {
             try {
                 $data = $this->userDB->getUsers($id);
                 if (!$data) {
-                    $strErrorDesc = 'User not found';
-                    $strErrorHeader = 'HTTP/1.1 404 Not Found';
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
                 }
             } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
 
         } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-        // send output
-        if ($strErrorDesc) {
-            $this->sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
-            return;
-        }
-        return $data;
+        return [
+            "data" => $data,
+            "strErrorDesc" => $this->strErrorDesc,
+            "strErrorHeader" => $this->strErrorHeader
+        ];
     }
 
     /**
@@ -98,41 +84,5 @@ class UserController extends BaseController
      */
     public function deleteAction()
     {
-    }
-
-    /**
-     * Get list of users
-     */
-    public function listAction()
-    {
-        $strErrorDesc = '';
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-
-        if (strtoupper($requestMethod) == 'GET') {
-            try {
-                $userModel = new UserDao();
-                $arrUsers = $userModel->getUsers();
-                $responseData = json_encode($arrUsers);
-            } catch (Error $e) {
-                $strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
-                $strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
-            }
-        } else {
-            $strErrorDesc = 'Method not supported';
-            $strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }
-
-        // send output
-        if (!$strErrorDesc) {
-            $this->sendOutput(
-                $responseData,
-                array('Content-Type: application/json', 'HTTP/1.1 200 OK')
-            );
-        } else {
-            $this->sendOutput(
-                json_encode(array('error' => $strErrorDesc)),
-                array('Content-Type: application/json', $strErrorHeader)
-            );
-        }
     }
 }
