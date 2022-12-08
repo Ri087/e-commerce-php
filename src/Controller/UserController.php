@@ -109,7 +109,6 @@ class UserController extends BaseController
      */
     public function deleteAction($id)
     {
-        var_dump($id);
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'POST') {
             try {

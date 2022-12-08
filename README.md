@@ -20,6 +20,8 @@
   Now that the project is cloned and opened, make sure to run the command:
 	
 	composer install
+  composer dump-autoload
+  composer update
     
   Fourthly, create a file in the path <b>src/inc/</b> named <b>config.php</b>
 	

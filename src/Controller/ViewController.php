@@ -29,7 +29,6 @@ class ViewController extends BaseController
     public function profil()
     {
         $data = $this->user->readAction($_SESSION['uid']);
-        var_dump($data);
         // $this->display("base");
     }
 
@@ -46,31 +45,20 @@ class ViewController extends BaseController
     public function productById($id)
     {
         $data = $this->product->readAction("readProductById", $id);
+        // var_dump($data);
         // var_dump($_SESSION);
         $this->display("product", $data);
+    }
+    public function listRates($id)
+    {
+        $data = $this->product->readAction("getAllRates",$id);
+        $this->display("rates", $data);
+        
     }
 
     public function productByCategorieName($name)
     {
         $data = $this->product->readAction("listProductByCategorie", $name);
-        var_dump($data);
-        $this->display("home");
-    }
-    public function createProduct()
-    {
-        $data = $this->product->createAction();
-        $this->display("home");
-    }
-    public function updateProduct()
-    {
-        $data = $this->product->updateAction(12, "TOP_Description", "hello world !");
-        var_dump($data);
-        $this->display("home");
-    }
-    public function deleteProduct($id)
-    {
-        $data = $this->product->deleteAction($id);
-        var_dump($data);
         $this->display("home");
     }
 
@@ -94,12 +82,10 @@ class ViewController extends BaseController
     public function adminUsers()
     {
         $data = $this->user->readAction();
-        if (isset($_GET['search']))
-        {
+        if (isset($_GET['search'])) {
             $pattern = "/{$_GET['search']}/i";
             foreach ($data['data'] as $key => $value) {
-                if (preg_match($pattern, $value['User_FakeName']) == 0 && preg_match($pattern, $value['User_FirstName']) == 0 && preg_match($pattern, $value['User_LastName']) == 0)
-                {
+                if (preg_match($pattern, $value['User_FakeName']) == 0 && preg_match($pattern, $value['User_FirstName']) == 0 && preg_match($pattern, $value['User_LastName']) == 0) {
                     unset($data['data'][$key]);
                 }
             }
@@ -113,12 +99,25 @@ class ViewController extends BaseController
     }
     public function adminProducts()
     {
-        $this->adminDisplay("products");
+        $data = $this->product->readAction("listTypeOfProduct");
+        if (isset($_GET['search'])) {
+            $pattern = "/{$_GET['search']}/i";
+            foreach ($data['data'] as $key => $value) {
+                if (preg_match($pattern, $value['TOP_Name']) == 0) {
+                    unset($data['data'][$key]);
+                }
+            }
+        }
+        $this->adminDisplay("products", $data);
     }
-    public function adminCommand()
+    public function adminProductsId($id = null)
     {
-        $this->adminDisplay("command");
+        $data = $this->product->readAction("readProductById", $id);
+        $this->adminDisplay("productsId", $data);
     }
+  
+
+
 }
 
 ?>
