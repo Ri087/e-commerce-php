@@ -47,7 +47,7 @@ class ProductDao extends Dao
 
         if ($this->connection->query($sqlStmtCreateProduct) === TRUE) {
             $id = $this->connection->insert_id;
-            $blob = addslashes(file_get_contents($img));
+            $blob = base64_encode($img);
             $sqlStmtAddProductImg = "INSERT INTO t_productsphoto (TOP_ID, PP_Photo) VALUE ($id, '{$blob}');";
             if ($this->connection->query($sqlStmtAddProductImg) === TRUE) {
                 return true;
@@ -60,19 +60,11 @@ class ProductDao extends Dao
     public function updateProduct($id, $column, $value)
     {
         echo $id, $column, $value;
-        if ($this->connection->query("UPDATE `t_typeofproducts` SET {$column} = '$value' WHERE TOP_ID = $id;") === TRUE){
-            return true;
-        }
-        return false;
+        return $this->connection->query("UPDATE `t_typeofproducts` SET {$column} = '$value' WHERE TOP_ID = $id;") === TRUE;
     }
     public function deleteProduct($id)
     {
-        if ($this->connection->query("DELETE FROM t_typeofproducts WHERE TOP_ID = $id;") === TRUE){
-            if ($this->connection->query("DELETE FROM t_productsphoto WHERE TOP_ID = $id;") === TRUE){
-                return true;
-            }
-        }
-        return false; 
+        return $this->connection->query("DELETE FROM t_typeofproducts WHERE TOP_ID = '$id';") && $this->connection->query("DELETE FROM t_productsphoto WHERE TOP_ID = '$id';");
     }
 
 }

@@ -17,7 +17,6 @@ if (isset($_SESSION['uid'])) {
 } else {
     $router->get($base_url . '/login', "View#login");
 }
-$router->get($base_url . '/products', "View#productByTypeOfPRoduct");
 $router->get($base_url . '/product/:id', "View#productById");
 $router->get($base_url . '/category/:name', "View#productByCategorieName");
 
@@ -26,18 +25,20 @@ if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['perm
     $router->get($base_url . '/admin', "View#admin");
     $router->get($base_url . '/admin/command', "View#adminCommand");
     $router->get($base_url . '/admin/products', "View#adminProducts");
+    $router->get($base_url . '/admin/products/:id', "View#adminProductsId");
+    $router->post($base_url . '/admin/products/create', "Product#createAction");
+    $router->post($base_url . '/admin/products/update/:id/:column', "Product#updateAction");
+    $router->post($base_url . '/admin/products/delete/:id', "Product#deleteAction");
     $router->get($base_url . '/admin/users', "View#adminUsers");
     $router->get($base_url . '/admin/users/:id', "View#adminUsersId");
-    $router->post($base_url . '/admin/delete/:id', "User#deleteAction");
+    $router->post($base_url . '/admin/user/update/:id', "User#updateAction");
+    $router->post($base_url . '/admin/users/delete/:id', "User#deleteAction");
 }
 
 $router->post($base_url . '/user/create', "User#createAction");
 $router->post($base_url . '/user/delete', "View#deleteUser");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
-$router->post($base_url . '/product/create', "View#createProduct"); // formulaire post
-$router->post($base_url . '/product/update', "View#updateProduct"); // formulaire post
-$router->post($base_url . '/product/delete/:id', "View#deleteProduct"); // link + id = delete
 
 $router->post($base_url . '/cart/add/:id', "Product#cartAdd"); 
 

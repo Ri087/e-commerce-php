@@ -18,11 +18,11 @@ class ProductController extends BaseController
 
     public function createAction()
     {
+        var_dump($_POST);
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        if (strtoupper($requestMethod) == 'GET') {
+        if (strtoupper($requestMethod) == 'POST') {
             try {
-                // RECUPERER INFORMATION FROM FORMULAIRE
-                if (!$this->productDB->createProduct("macbook", "apple mac", 12600, 0.2, 900, "https://i.imgur.com/UYcHkKD.png")) {
+                if (!$this->productDB->createProduct($_POST['name'], $_POST['description'], $_POST['price'], $_POST['tva'], $_POST['quantity'], $_POST['img'])) {
                     $this->strErrorDesc = 'Ressource not create !';
                     $this->strErrorHeader = 'HTTP/1.1 409 Conflict';
                 }
@@ -69,12 +69,11 @@ class ProductController extends BaseController
     }
 
 
-    public function updateAction($id, $column, $content)
+    public function updateAction($id, $column)
     {
-        $data = null;
-
+        $content = $_POST[$column];
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        if (strtoupper($requestMethod) == 'GET') {
+        if (strtoupper($requestMethod) == 'POST') {
             try {
                 $data = $this->productDB->updateProduct($id, $column, $content);
                 if (!$data) {
@@ -90,18 +89,12 @@ class ProductController extends BaseController
             $this->strErrorDesc = 'Method not supported';
             $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-        return [
-            "data" => $data,
-            "strErrorDesc" => $this->strErrorDesc,
-            "strErrorHeader" => $this->strErrorHeader
-        ];
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/' . $id);
     }
     public function deleteAction($id)
     {
-        $data = null;
-
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        if (strtoupper($requestMethod) == 'GET') {
+        if (strtoupper($requestMethod) == 'POST') {
             try {
                 $data = $this->productDB->deleteProduct($id);
                 if (!$data) {
@@ -117,22 +110,20 @@ class ProductController extends BaseController
             $this->strErrorDesc = 'Method not supported';
             $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-        return [
-            "data" => $data,
-            "strErrorDesc" => $this->strErrorDesc,
-            "strErrorHeader" => $this->strErrorHeader
-        ];
+        if ($this->strErrorHeader) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/' . $id);
+        } else {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/products');
+        }
     }
     public function cartAdd($id)
     {
         $data = null;
         $requestMethod = $_SERVER["REQUEST_METHOD"];
-        var_dump($id);
         if (strtoupper($requestMethod) == 'POST') {
             try {
                 $data = $this->productDB->readProductById($id);
-                var_dump($data);
-                
+
                 if (!$data) {
                     $this->strErrorDesc = 'User not found';
                     $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
@@ -141,27 +132,23 @@ class ProductController extends BaseController
                 $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
                 $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
             }
-
         } else {
             $this->strErrorDesc = 'Method not supported';
             $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
-        }        
+        }
         $_SESSION['products'][$id] += 1;
-        
-
-       
         header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/cart');
 
     }
     public function cartDeleteItem($id)
     {
-        if( $_SESSION['products'][$id] > 1){
+        if ($_SESSION['products'][$id] > 1) {
             $_SESSION['products'][$id] -= 1;
         } else {
             unset($_SESSION['products'][$id]);
 
-        }  
+        }
         header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/cart');
     }
-       
+
 }

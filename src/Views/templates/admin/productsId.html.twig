@@ -1,0 +1,44 @@
+{% extends "baseTemplate.html.twig" %}
+{% block meta %}
+    <link rel="stylesheet" type="text/css" href="/e-commerce-php-les-bests-benjou-et-jeremoux/src/Views/style/adminProductsId.css"/>
+{% endblock %}
+{% block title %}
+	Products
+{% endblock %}
+{% block content %}
+	<section>
+		{% for product in data %}
+            <div class="li">
+			{{ product.TOP_ID }}
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/update/{{ product.TOP_ID }}/TOP_Name" method="post">
+					{{ product.TOP_Name }}
+					<input type="text" placeholder="" name="TOP_Name">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/update/{{ product.TOP_ID }}/TOP_Description" method="post">
+					{{ product.TOP_Description }}
+					<input type="text" placeholder="" name="TOP_Description">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/update/{{ product.TOP_ID }}/TOP_DefaultPrice" method="post">
+					{{ product.TOP_DefaultPrice }}
+					<input type="text" placeholder="" name="TOP_DefaultPrice">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/update/{{ product.TOP_ID }}/TOP_TVA" method="post">
+					{{ product.TOP_TVA }}
+					<input type="text" placeholder="" name="TOP_TVA">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/update/{{ product.TOP_ID }}/TOP_Quantity" method="post">
+					{{ product.TOP_Quantity }}
+					<input type="text" placeholder="" name="TOP_Quantity">
+                <button type="submit">Update</button>
+				</form>
+			<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products/delete/{{ product.TOP_ID }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+		</div>
+		{% endfor %}
+	</section>
+{% endblock %}

@@ -1,0 +1,10 @@
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.li {
+    display: flex;
+    flex-direction: column;
+}
