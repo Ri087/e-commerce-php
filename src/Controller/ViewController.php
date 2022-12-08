@@ -28,9 +28,9 @@ class ViewController extends BaseController
 
     public function profil()
     {
-        $data = $this->user->readAction(3);
+        $data = $this->user->readAction($_SESSION['uid']);
         var_dump($data);
-        $this->display("base");
+        // $this->display("base");
     }
 
     public function home()
@@ -89,7 +89,22 @@ class ViewController extends BaseController
     public function adminUsers()
     {
         $data = $this->user->readAction();
+        if (isset($_GET['search']))
+        {
+            $pattern = "/{$_GET['search']}/i";
+            foreach ($data['data'] as $key => $value) {
+                if (preg_match($pattern, $value['User_FakeName']) == 0 && preg_match($pattern, $value['User_FirstName']) == 0 && preg_match($pattern, $value['User_LastName']) == 0)
+                {
+                    unset($data['data'][$key]);
+                }
+            }
+        }
         $this->adminDisplay("users", $data);
+    }
+    public function adminUsersId($id = null)
+    {
+        $data = $this->user->readAction($id);
+        $this->adminDisplay("usersId", $data);
     }
     public function adminProducts()
     {

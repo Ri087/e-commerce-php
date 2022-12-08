@@ -1,0 +1,22 @@
+{% extends "baseTemplate.html.twig" %}
+{% block meta %}
+    <link rel="stylesheet" type="text/css" href="/e-commerce-php-les-bests-benjou-et-jeremoux/src/Views/style/adminUsersId.css"/>
+{% endblock %}
+{% block title %}
+	Users
+{% endblock %}
+{% block content %}
+	<section>
+		{% for user in data %}
+            <div class="li">
+                <ul></ul>
+			{% for elem in user %}
+			    <ul>{{ elem }}</ul>
+			{% endfor %}
+			<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/delete/{{ user.User_ID }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+		</div>
+		{% endfor %}
+	</section>
+{% endblock %}

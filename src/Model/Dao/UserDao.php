@@ -52,9 +52,9 @@ class UserDao extends Dao
 
     public function getUsers($id = null)
     {
-        $sqlStmt = "SELECT * FROM T_User WHERE t_user.User_ID = $id";
+        $sqlStmt = "SELECT * FROM T_User WHERE User_ID = $id;";
         if ($id == null) {
-            $sqlStmt = "SELECT * FROM T_User;";
+            $sqlStmt = "SELECT * FROM T_User WHERE User_Permission = 0;";
         }
         $data = $this->connection->query($sqlStmt);
         return $this->userObj->dataProcessing($data);
@@ -62,8 +62,11 @@ class UserDao extends Dao
 
     public function deleteUser($id)
     {
-        return $this->select("DELETE FROM T_User WHERE User_ID = $id;");
-
+        $sqlStmt = "DELETE FROM T_User WHERE User_ID = '$id';";
+        $data = $this->connection->query($sqlStmt);
+        $sqlStmt = "DELETE FROM T_UserSecret WHERE User_ID = '$id';";
+        $data = $this->connection->query($sqlStmt);
+        return $data;
     }
 
 }

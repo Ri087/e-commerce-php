@@ -10,6 +10,7 @@ session_start();
 $router = new Router();
 
 $router->get($base_url . '/', "View#home");
+
 if (isset($_SESSION['uid'])) {
     $router->get($base_url . '/profil', "View#profil");
     $router->get($base_url . '/profil/update', "View#profil");
@@ -26,10 +27,12 @@ if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['perm
     $router->get($base_url . '/admin/command', "View#adminCommand");
     $router->get($base_url . '/admin/products', "View#adminProducts");
     $router->get($base_url . '/admin/users', "View#adminUsers");
-    $router->get($base_url . '/admin/users/:id', "View#adminUsers");
+    $router->get($base_url . '/admin/users/:id', "View#adminUsersId");
+    $router->post($base_url . '/admin/delete/:id', "User#deleteAction");
 }
 
 $router->post($base_url . '/user/create', "User#createAction");
+$router->post($base_url . '/user/delete', "View#deleteUser");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 $router->post($base_url . '/product/create', "View#createProduct"); // formulaire post

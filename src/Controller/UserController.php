@@ -107,9 +107,32 @@ class UserController extends BaseController
     /**
      * Delete our profil (/!\ Admin - Delete a profil)
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
+        var_dump($id);
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                if (!$this->userDB->deleteUser($id)) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        if ($this->strErrorHeader) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/' . $id);
+        } else {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/users');
+        }
     }
+
     public function loginAction()
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -141,8 +164,8 @@ class UserController extends BaseController
 
     public function logoutAction()
     {
-        $_SESSION["uid"] = null;
-        $_SESSION["permission"] = null;
+        unset($_SESSION["uid"]);
+        unset($_SESSION["permission"]);
         header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
     }
 }

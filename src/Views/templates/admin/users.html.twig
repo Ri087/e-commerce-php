@@ -6,13 +6,19 @@
 	Users
 {% endblock %}
 {% block content %}
-	<section>
+	<section id="s2">
+		<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users" method="get">
+			<input type="text" placeholder="Search.." name="search">
+			<button type="submit">Submit</button>
+		</form>
+	</section>
+	<section id="s1">
 		{% for user in data %}
 		<div class="li">
 			{% for elem in user %}
 			<ul>{{ elem }}</ul>
 			{% endfor %}
-			<br>
+			<a href="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/{{ user.User_ID }}">check</a>
 		</div>
 		{% endfor %}
 	</section>
