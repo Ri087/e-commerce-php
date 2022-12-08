@@ -42,7 +42,11 @@ $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 
 $router->post($base_url . '/cart/put/:id', "Product#putProductInCart"); 
-$router->get($base_url . '/cart', "View#cart"); 
+$router->get($base_url . '/cart', "View#cart");
+$router->get($base_url . '/cart/buy', function () {
+    unset($_SESSION['products']);
+    header("Location: /e-commerce-php-les-bests-benjou-et-jeremoux/");
+});
 
 
 
