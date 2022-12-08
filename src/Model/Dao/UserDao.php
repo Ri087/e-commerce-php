@@ -69,4 +69,9 @@ class UserDao extends Dao
         return $data;
     }
 
+    public function updateUser($id, $column, $value)
+    {
+        return $this->connection->query("UPDATE `t_user` SET {$column} = '$value' WHERE User_ID = $id;");
+    }
+
 }

@@ -58,10 +58,9 @@ class ProductDao extends Dao
         }
         return false;
     }
-    //value de t_typeOfProduct = TOP_ID, TOP_Name, TOP_Description, TOP_DefaultPrice, TOP_TVA, TOP_Quantity
     public function updateProduct($id, $column, $value)
     {
-        return $this->connection->query("UPDATE `t_typeofproducts` SET {$column} = '$value' WHERE TOP_ID = $id;") === TRUE;
+        return $this->connection->query("UPDATE `t_typeofproducts` SET {$column} = '$value' WHERE TOP_ID = $id;");
     }
     public function deleteProduct($id)
     {

@@ -29,7 +29,7 @@ class ViewController extends BaseController
     public function profil()
     {
         $data = $this->user->readAction($_SESSION['uid']);
-        // $this->display("base");
+        $this->display("profil", $data);
     }
 
     public function home()
@@ -45,8 +45,10 @@ class ViewController extends BaseController
     public function productById($id)
     {
         $data = $this->product->readAction("readProductById", $id);
-        // var_dump($data);
-        // var_dump($_SESSION);
+
+        if (isset($_SESSION['products'][$id])) {
+            $data['quantity'] = intval($_SESSION['products'][$id]);
+        }
         $this->display("product", $data);
     }
     public function listRates($id)
