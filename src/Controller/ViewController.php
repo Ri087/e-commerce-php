@@ -36,6 +36,14 @@ class ViewController extends BaseController
     public function home()
     {
         $data = $this->product->readAction("listTypeOfProduct");
+        if (isset($_GET['search'])) {
+            $pattern = "/{$_GET['search']}/i";
+            foreach ($data['data'] as $key => $value) {
+                if (preg_match($pattern, $value['TOP_Name']) == 0) {
+                    unset($data['data'][$key]);
+                }
+            }
+        }
         $this->display("home", $data);
     }
 
