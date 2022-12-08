@@ -3,6 +3,8 @@ require_once __DIR__ . "/vendor/autoload.php";
 
 use JustGo\Router\Router;
 use JustGo\Router\RouterException;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 $base_url = "/e-commerce-php-les-bests-benjou-et-jeremoux";
 
@@ -54,5 +56,9 @@ $router->post($base_url . '/rates/send/:id', "Product#createRate");
 try {
     $router->run();
 } catch (RouterException $e) {
-    echo "Afficher page 404";
+    $loader = new FilesystemLoader(__DIR__ . '/src/Views/templates');
+    $twig = new Environment($loader);
+    $data['connected'] = isset($_SESSION['uid']);
+    echo $twig->render("404" . '.html.twig', $data);
 }
+
