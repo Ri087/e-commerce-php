@@ -33,7 +33,7 @@ class ProductDao extends Dao
     public function listTypeOfProduct()
     {
         $productObjct = new ProductObjectData();
-        $sqlStmt = "SELECT t_typeofproducts.TOP_ID, t_typeofproducts.TOP_Name , t_typeofproducts.TOP_Description, t_productsphoto.PP_Photo FROM `t_typeofproducts`
+        $sqlStmt = "SELECT t_typeofproducts.TOP_ID, t_typeofproducts.TOP_Name , t_typeofproducts.TOP_Description, t_productsphoto.PP_Photo , t_typeofproducts.TOP_DefaultPrice, t_typeofproducts.TOP_Quantity FROM `t_typeofproducts`
         INNER JOIN t_productsphoto ON t_productsphoto.TOP_ID = t_typeofproducts.TOP_ID;";
         $data = $this->connection->query($sqlStmt);
         return $productObjct->dataProcessing($data);

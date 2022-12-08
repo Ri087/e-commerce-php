@@ -46,7 +46,7 @@ class ViewController extends BaseController
     public function productById($id)
     {
         $data = $this->product->readAction("readProductById", $id);
-        var_dump($_SESSION);
+        // var_dump($_SESSION);
         $this->display("product", $data);
     }
 
