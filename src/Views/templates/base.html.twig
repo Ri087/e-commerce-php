@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="./src/Views/dist/style.css" rel="stylesheet"> {% block meta %}{% endblock %}
 		<title>
-			{% block title %}{% endblock %}
+			Ymazon - {% block title %}{% endblock %}
 		</title>
 	</head>
 	<body>
@@ -50,8 +50,11 @@
 						</div>
 					</nav>
 					<div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-						<a href="#" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</a>
-						<a href="#" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
+					{% if connected %}
+						<a href="/e-commerce-php-les-bests-benjou-et-jeremoux/profil" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Profil</a>
+						{% else %}
+						<a href="/e-commerce-php-les-bests-benjou-et-jeremoux/login" class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Sign up</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>
