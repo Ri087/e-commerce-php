@@ -168,4 +168,10 @@ class UserController extends BaseController
         unset($_SESSION["permission"]);
         header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
     }
+    public function addCartAction()
+    {
+        $_SESSION["uid"] = null;
+        $_SESSION["permission"] = null;
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/');
+    }
 }

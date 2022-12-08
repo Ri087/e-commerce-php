@@ -2,31 +2,84 @@
     margin: 0;
     padding: 0;
 }
-
-.main{
+body{
     display: flex;
-    height: 100vh;
+    height: auto;
     width: 100%;
-    align-items: center;
+    flex-direction: column;
 }
+/* ---------header-------------- */
 
-.form{
+header{
+
+    display: flex;
+    height: 20%;
+    width: 100%;
+    background-color:#074970;
+
+}
+header a{
+    color: white;
+    text-decoration: none;
+}
+.div-header{
     display: flex;
     height: 100%;
     width: 50%;
-    flex-direction: column;
+    align-items: center;
+}
+.div-header p{
+    color: white;
+}
+.nameapp{
+    justify-content: start;
+    font-size: 3em;
+    
+}
+.search{
+    justify-content: end;
+    margin-right: 30px;
+
+}
+.cart{
+    color: white;
+}
+/* ----------------------- */
+
+/* -----------body------------ */
+
+.main{
+    display: flex;
+    height: auto;
+    width: 100%;
+}
+
+/* ----------------------- */
+
+/* ----------footer------------- */
+
+footer{
+
+    display: flex;
+    height: 20vh;
+    width: 100%;
     justify-content: center;
     align-items: center;
+    background-color: #074970;
 }
-
-.form form{
+.div-footer{
     display: flex;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
-   
+    height:100% ;
+    width: 33%;
+}
+.div-footer a{
+    color: white;
 }
 
-.form form input{
-    display: flex;
-    margin: 10px;
-}
+
+
+
+/* ----------------------- */
+
