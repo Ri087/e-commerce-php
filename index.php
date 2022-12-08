@@ -36,6 +36,10 @@ $router->post($base_url . '/product/create', "View#createProduct"); // formulair
 $router->post($base_url . '/product/update', "View#updateProduct"); // formulaire post
 $router->post($base_url . '/product/delete/:id', "View#deleteProduct"); // link + id = delete
 
+$router->post($base_url . '/cart/add/:id', "Product#cartAdd"); 
+
+
+
 try {
     $router->run();
 } catch (RouterException $e) {
