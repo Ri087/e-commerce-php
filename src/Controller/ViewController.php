@@ -23,6 +23,7 @@ class ViewController extends BaseController
     {
         $loader = new FilesystemLoader(__DIR__ . '/../Views/templates');
         $twig = new Environment($loader);
+        $data['connected'] = isset($_SESSION['uid']);
         echo $twig->render($page . '.html.twig', $data);
     }
 
