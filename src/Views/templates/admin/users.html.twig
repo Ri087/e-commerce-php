@@ -1,0 +1,25 @@
+{% extends "baseTemplate.html.twig" %}
+{% block meta %}
+    <link rel="stylesheet" type="text/css" href="/e-commerce-php-les-bests-benjou-et-jeremoux/src/Views/style/adminUsers.css"/>
+{% endblock %}
+{% block title %}
+	Users
+{% endblock %}
+{% block content %}
+	<section id="s2">
+		<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users" method="get">
+			<input type="text" placeholder="Search.." name="search">
+			<button type="submit">Submit</button>
+		</form>
+	</section>
+	<section id="s1">
+		{% for user in data %}
+		<div class="li">
+			{% for elem in user %}
+			<ul>{{ elem }}</ul>
+			{% endfor %}
+			<a href="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/{{ user.User_ID }}">check</a>
+		</div>
+		{% endfor %}
+	</section>
+{% endblock %}

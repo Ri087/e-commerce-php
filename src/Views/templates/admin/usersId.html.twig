@@ -1,0 +1,44 @@
+{% extends "baseTemplate.html.twig" %}
+{% block meta %}
+    <link rel="stylesheet" type="text/css" href="/e-commerce-php-les-bests-benjou-et-jeremoux/src/Views/style/adminUsersId.css"/>
+{% endblock %}
+{% block title %}
+	Users
+{% endblock %}
+{% block content %}
+	<section>
+		{% for user in data %}
+            <div class="li">
+			{{ user.User_ID }}
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/update/{{ user.User_ID }}/User_FakeName" method="post">
+					{{ user.User_FakeName }}
+					<input type="text" placeholder="" name="User_FakeName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/update/{{ user.User_ID }}/User_FirstName" method="post">
+					{{ user.User_FirstName }}
+					<input type="text" placeholder="" name="User_FirstName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/update/{{ user.User_ID }}/User_LastName" method="post">
+					{{ user.User_LastName }}
+					<input type="text" placeholder="" name="User_LastName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/update/{{ user.User_ID }}/User_PhoneNumber" method="post">
+					{{ user.User_PhoneNumber }}
+					<input type="text" placeholder="" name="User_PhoneNumber">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/update/{{ user.User_ID }}/User_BirthDate" method="post">
+					{{ user.User_BirthDate }}
+					<input type="text" placeholder="" name="User_BirthDate">
+                <button type="submit">Update</button>
+				</form>
+			<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/delete/{{ user.User_ID }}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+		</div>
+		{% endfor %}
+	</section>
+{% endblock %}

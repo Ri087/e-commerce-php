@@ -1,0 +1,32 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    height: 15vh;
+    background-color: grey;
+}
+
+.n {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+#n1 {
+    justify-content: center;
+}
+
+#n2 {
+    justify-content: space-around;
+}
+
+footer {
+    display: flex;
+    height: 25vh;
+    background-color: grey;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,16 @@
+#s1 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#s2 {
+    display: flex;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.li {
+    border: 1px solid black;
+    padding: 1%;
+}

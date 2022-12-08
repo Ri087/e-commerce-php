@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/e-commerce-php-les-bests-benjou-et-jeremoux/src/Views/style/admin.css"/>
+    {% block meta %}{% endblock %}
+    <title>
+        Admin - {% block title %}{% endblock %}
+    </title>
+</head>
+
+<body>
+    <header>
+        <div id="n1" class="n">
+            <div>
+                <a href="/e-commerce-php-les-bests-benjou-et-jeremoux">Home<a/>
+            </div>
+        </div>
+        <div id="n2" class="n">
+            <div>
+                <a href="/e-commerce-php-les-bests-benjou-et-jeremoux/admin">Home Admin<a/>
+            </div>
+            <div>
+                <a href="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/users">Users Admin<a/>
+            </div>
+            <div>
+                <a href="/e-commerce-php-les-bests-benjou-et-jeremoux/admin/products">Products Admin<a/>
+            </div>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+    <footer>
+        EVERY LEGAL INFORMATIONS
+    </footer>
+</body>
+
+</html>

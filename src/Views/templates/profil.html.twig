@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Profil
+{% endblock %}
+
+{% block meta %}
+{% endblock %}
+
+{% block content %}
+    {% for user in data %}
+            <div class="li">
+			{{ user.User_ID }}
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/update/User_FakeName" method="post">
+					{{ user.User_FakeName }}
+					<input type="text" placeholder="pseudo" name="User_FakeName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/update/User_FirstName" method="post">
+					{{ user.User_FirstName }}
+					<input type="text" placeholder="prenom" name="User_FirstName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/update/User_LastName" method="post">
+					{{ user.User_LastName }}
+					<input type="text" placeholder="nom" name="User_LastName">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/update/User_PhoneNumber" method="post">
+					{{ user.User_PhoneNumber }}
+					<input type="text" placeholder="telephone" name="User_PhoneNumber">
+                <button type="submit">Update</button>
+				</form>
+				<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/update/User_BirthDate" method="post">
+					{{ user.User_BirthDate }}
+					<input type="text" placeholder="date naissance" name="User_BirthDate">
+                <button type="submit">Update</button>
+				</form>
+			<form action="/e-commerce-php-les-bests-benjou-et-jeremoux/user/delete" method="post">
+                <button type="submit">Delete</button>
+            </form>
+		</div>
+		{% endfor %}
+{% endblock %}
