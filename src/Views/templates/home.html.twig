@@ -1,15 +1,20 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	Ma  grand mere
+	home | Y Mamazon
 {% endblock %}
 
 {% block meta %}
-	{# <link href="src/Views/style/home.css" rel="stylesheet">
-	<link href="src/Views/style/style.css" rel="stylesheet"> #}
-
+<link href="src/Views/style/style.css" rel="stylesheet">
+	<link href="src/Views/style/home.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-	<h1>gfdgdfg</h1>
-{% endblock %}
+	<ul class="flex-container nowrap">
+		{% for product in data %}
+				<a href="product/{{ product.TOP_ID}}" class="flex-item">
+				<p>{{ product.TOP_Name}}</p>
+				</a>
+		
+		{% endfor %}
+	{% endblock %}

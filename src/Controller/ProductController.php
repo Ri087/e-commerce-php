@@ -123,4 +123,45 @@ class ProductController extends BaseController
             "strErrorHeader" => $this->strErrorHeader
         ];
     }
+    public function cartAdd($id)
+    {
+        $data = null;
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        var_dump($id);
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                $data = $this->productDB->readProductById($id);
+                var_dump($data);
+                
+                if (!$data) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }        
+        $_SESSION['products'][$id] += 1;
+        
+
+       
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/cart');
+
+    }
+    public function cartDeleteItem($id)
+    {
+        if( $_SESSION['products'][$id] > 1){
+            $_SESSION['products'][$id] -= 1;
+        } else {
+            unset($_SESSION['products'][$id]);
+
+        }  
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/cart');
+    }
+       
 }

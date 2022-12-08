@@ -35,14 +35,19 @@ class ViewController extends BaseController
 
     public function home()
     {
+        $data = $this->product->readAction("listTypeOfProduct");
+        $this->display("home", $data);
+    }
 
-        $this->display("base");
+    public function cart()
+    {
+        $this->display("cart");
     }
     public function productById($id)
     {
         $data = $this->product->readAction("readProductById", $id);
-        var_dump($data);
-        $this->display("home");
+        var_dump($_SESSION);
+        $this->display("product", $data);
     }
 
     public function productByCategorieName($name)
