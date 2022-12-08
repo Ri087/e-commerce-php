@@ -147,6 +147,28 @@ class ProductController extends BaseController
         }
         header("Location: /e-commerce-php-les-bests-benjou-et-jeremoux/rates/$productID");
     }
+    public function getMultipleProductsforCart()
+    {
+        $data = [];
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'GET') {
+            try {
+                foreach ($_SESSION['products'] as $key => $value) {
+                    $temp = $this->productDB->readProductById($key);
+                    $temp[0]['quantity'] = $value;
+                    array_push($data, $temp[0]);
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        return $data;
+    }
     
 
 }

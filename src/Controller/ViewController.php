@@ -49,7 +49,8 @@ class ViewController extends BaseController
 
     public function cart()
     {
-        $this->display("cart");
+        $data['data'] = $this->product->getMultipleProductsforCart();
+        $this->display("cart", $data);
     }
     public function productById($id)
     {
