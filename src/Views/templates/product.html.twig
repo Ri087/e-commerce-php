@@ -16,8 +16,18 @@
 				<h3>description: {{product.TOP_Description}}</h3>
 				<h3>quantitées: {{product.TOP_Quantity}}</h3>
 				<h3>prix: {{product.TOP_DefaultPrice}} $</h3>
-        <form action="/e-commerce-php-les-bests-benjou-et-jeremoux/cart/add/{{product.TOP_ID}}" method="post">
-                <button type="submit">ajouter au panier</button>
+        <form action="/e-commerce-php-les-bests-benjou-et-jeremoux/cart/put/{{product.TOP_ID}}" method="post">
+			<label for="quantity">Quantity:</label>
+			<select name="quantity">
+			{% for i in range (0, product.TOP_Quantity) %}
+				{% if quantity == i %}
+				<option selected="selected" value="{{i}}">{{i}}</option>
+				{% else %}
+				<option value="{{i}}">{{i}}</option>
+				{% endif %}
+			{% endfor %}
+			</select>
+            <button type="submit">Définir la quantité</button>
+        </form>
 		{% endfor %}
-            </form>
-	{% endblock %}
+{% endblock %}

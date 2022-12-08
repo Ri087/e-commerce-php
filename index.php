@@ -7,7 +7,6 @@ use JustGo\Router\RouterException;
 $base_url = "/e-commerce-php-les-bests-benjou-et-jeremoux";
 
 session_start();
-var_dump($_SESSION);
 $router = new Router();
 
 $router->get($base_url . '/', "View#home");
@@ -42,7 +41,7 @@ $router->post($base_url . '/user/delete', "User#deleteAction");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 
-$router->post($base_url . '/cart/add/:id', "Product#cartAdd"); 
+$router->post($base_url . '/cart/put/:id', "Product#putProductInCart"); 
 
 
 

@@ -45,6 +45,9 @@ class ViewController extends BaseController
     public function productById($id)
     {
         $data = $this->product->readAction("readProductById", $id);
+        if (isset($_SESSION['products'][$id])) {
+            $data['quantity'] = intval($_SESSION['products'][$id]);
+        }
         $this->display("product", $data);
     }
 
