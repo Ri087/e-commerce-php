@@ -42,6 +42,8 @@ $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 
 $router->post($base_url . '/cart/put/:id', "Product#putProductInCart"); 
+$router->get($base_url . '/cart', "View#cart"); 
+
 
 
 $router->get($base_url . '/rates/:id', "View#listRates"); 
