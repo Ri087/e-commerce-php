@@ -29,7 +29,7 @@ class ViewController extends BaseController
     public function profil()
     {
         $data = $this->user->readAction($_SESSION['uid']);
-        // $this->display("base");
+        $this->display("profil", $data);
     }
 
     public function home()

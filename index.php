@@ -7,6 +7,7 @@ use JustGo\Router\RouterException;
 $base_url = "/e-commerce-php-les-bests-benjou-et-jeremoux";
 
 session_start();
+var_dump($_SESSION);
 $router = new Router();
 
 $router->get($base_url . '/', "View#home");
@@ -31,12 +32,13 @@ if (isset($_SESSION['uid']) && isset($_SESSION['permission']) && $_SESSION['perm
     $router->post($base_url . '/admin/products/delete/:id', "Product#deleteAction");
     $router->get($base_url . '/admin/users', "View#adminUsers");
     $router->get($base_url . '/admin/users/:id', "View#adminUsersId");
-    $router->post($base_url . '/admin/user/update/:id', "User#updateAction");
-    $router->post($base_url . '/admin/users/delete/:id', "User#deleteAction");
+    $router->post($base_url . '/admin/users/update/:id/:column', "User#adminUpdateAction");
+    $router->post($base_url . '/admin/users/delete/:id', "User#adminDeleteAction");
 }
 
 $router->post($base_url . '/user/create', "User#createAction");
-$router->post($base_url . '/user/delete', "View#deleteUser");
+$router->post($base_url . '/user/update/:column', "User#updateAction");
+$router->post($base_url . '/user/delete', "User#deleteAction");
 $router->post($base_url . '/user/login', "User#loginAction");
 $router->get($base_url . '/user/logout', "User#logoutAction");
 

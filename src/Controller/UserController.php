@@ -100,14 +100,56 @@ class UserController extends BaseController
     /**
      * Update our information (/!\ Admin - Update user information)
      */
-    public function updateAction($id)
+    public function adminUpdateAction($id, $column)
     {
+        $content = $_POST[$column];
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                $data = $this->userDB->updateUser($id, $column, $content);
+                if (!$data) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/' . $id);
+    }
+    public function updateAction($column)
+    {
+        $id = $_SESSION['uid'];
+        $content = $_POST[$column];
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                $data = $this->userDB->updateUser($id, $column, $content);
+                if (!$data) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
     }
 
     /**
      * Delete our profil (/!\ Admin - Delete a profil)
      */
-    public function deleteAction($id)
+    public function adminDeleteAction($id)
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         if (strtoupper($requestMethod) == 'POST') {
@@ -129,6 +171,33 @@ class UserController extends BaseController
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/users/' . $id);
         } else {
             header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/users');
+        }
+    }
+    public function deleteAction()
+    {
+        $id = $_SESSION['uid'];
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        if (strtoupper($requestMethod) == 'POST') {
+            try {
+                if (!$this->userDB->deleteUser($id)) {
+                    $this->strErrorDesc = 'User not found';
+                    $this->strErrorHeader = 'HTTP/1.1 404 Not Found';
+                }
+            } catch (Error $e) {
+                $this->strErrorDesc = $e->getMessage() . 'Something went wrong! Please contact support.';
+                $this->strErrorHeader = 'HTTP/1.1 500 Internal Server Error';
+            }
+        } else {
+            $this->strErrorDesc = 'Method not supported';
+            $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
+        }
+
+        if ($this->strErrorHeader) {
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/profil');
+        } else {
+            unset($_SESSION['uid']);
+            unset($_SESSION['permission']);
+            header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux');
         }
     }
 
