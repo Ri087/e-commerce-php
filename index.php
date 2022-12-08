@@ -43,6 +43,10 @@ $router->get($base_url . '/user/logout', "User#logoutAction");
 $router->post($base_url . '/cart/add/:id', "Product#cartAdd"); 
 
 
+$router->get($base_url . '/rates/:id', "View#listRates"); 
+$router->post($base_url . '/rates/send/:id', "Product#createRate"); 
+
+
 
 try {
     $router->run();
