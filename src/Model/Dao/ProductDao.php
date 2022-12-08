@@ -16,7 +16,7 @@ class ProductDao extends Dao
         $sqlStmt = "SELECT t_typeofproducts.TOP_ID, t_typeofproducts.TOP_Name, t_typeofproducts.TOP_Description, t_typeofproducts.TOP_DefaultPrice, t_typeofproducts.TOP_TVA, t_typeofproducts.TOP_Quantity , t_productscategory.Cate_Name, t_productsphoto.PP_Photo FROM t_typeofproducts
         INNER JOIN t_productscategory ON t_productscategory.TOP_ID = t_typeofproducts.TOP_ID
         INNER JOIN t_productsphoto ON t_productsphoto.TOP_ID = t_typeofproducts.TOP_ID
-        WHERE t_productscategory.Cate_Name = '$name'";
+        WHERE t_productscategory.Cate_Name LIKE'%$name%'";
         $data = $this->connection->query($sqlStmt);
         return $productObjct->dataProcessing($data);
     }
