@@ -34,10 +34,7 @@ class ProductController extends BaseController
             $this->strErrorDesc = 'Method not supported';
             $this->strErrorHeader = 'HTTP/1.1 422 Unprocessable Entity';
         }
-        return [
-            "strErrorDesc" => $this->strErrorDesc,
-            "strErrorHeader" => $this->strErrorHeader
-        ];
+        header('Location: /e-commerce-php-les-bests-benjou-et-jeremoux/admin/products');
     }
     public function readAction($function, $id = null)
     {
